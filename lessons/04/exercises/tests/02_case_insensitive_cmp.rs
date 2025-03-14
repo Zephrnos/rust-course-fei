@@ -4,6 +4,11 @@
 //! two (ASCII) string slices in a case insensitive way, without performing any reallocations
 //! and without modifying the original strings.
 
+struct CaseInsensitive {
+    elem: String
+}
+
+
 /// Below you can find a set of unit tests.
 #[cfg(test)]
 mod tests {

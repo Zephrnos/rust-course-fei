@@ -23,6 +23,67 @@
 //
 // The format of the ticket is `<movie-name>;<day>;<visitor-name>`. The second semicolon is optional
 // when the visitor name is missing. There must not be any trailing data in the input string.
+#[derive(PartialEq)]
+enum Day {
+    Monday,
+    Tuesday,
+    Wednesday,
+    Thursday,
+    Friday,
+    Saturday,
+    Sunday,
+    Invalid
+}
+
+struct Ticket<'a> {
+    movie: &'a str,
+    day: Day,
+    visitor: Option<&'a str>
+}
+
+fn match_day(day: &str) -> Day {
+    match day.to_lowercase().as_str() {
+        "monday" => Day::Monday,
+        "tuesday" => Day::Tuesday,
+        "wednesday" => Day::Wednesday,
+        "thursday" => Day::Thursday,
+        "friday" => Day::Friday,
+        "saturday" => Day::Saturday,
+        "sunday" => Day::Sunday,
+        _ => Day::Invalid, // Handle invalid input
+    }
+}
+
+fn parse_ticket(ticket: &str) -> Option<Ticket> {
+    let parts: Vec<_> = ticket.split(";").collect();
+
+    // Short-circuit if the number of parts is invalid
+    if parts.len() != 2 && parts.len() != 3 {
+        return None;
+    }
+
+    // Short-circuit if any part contains invalid characters
+    if parts.iter().any(|elem| !elem.chars().all(|c| c.is_ascii_alphanumeric() || c.is_ascii_whitespace())) {
+        return None;
+    }
+
+    // Short-circuit if the day is invalid
+    let day = match_day(parts[1]);
+    if day == Day::Invalid {
+        return None;
+    }
+
+    // Construct the ticket
+    Some(Ticket {
+        movie: parts[0],
+        day,
+        visitor: if parts.len() == 3 && !parts[2].is_empty() {
+            Some(parts[2])
+        } else {
+            None
+        },
+    })
+}
 
 /// Below you can find a set of unit tests.
 #[cfg(test)]

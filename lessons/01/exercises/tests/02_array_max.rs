@@ -6,6 +6,16 @@
 // The input argument is an array of ten `i32` integers.
 // How does that type look like in Rust?
 
+fn find_largest(num_array: [i32; 10]) -> i32 {
+    let mut largest:i32 = num_array[0];
+    for elem in num_array{
+        if elem > largest{
+            largest = elem;
+        }
+    }
+    return largest;
+}
+
 /// Below you can find a set of unit tests.
 #[cfg(test)]
 mod tests {

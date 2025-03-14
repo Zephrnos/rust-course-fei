@@ -3,6 +3,29 @@
 // TODO: Write a simple bubble sort implementation that receives a unique (mutable) reference
 // to a slice of numbers and sorts them in-place.
 
+fn bubble_sort(slice1: &mut [i64]) -> Vec<i64> {
+    let n = slice1.len();
+
+    loop {
+        let mut swapped = false;
+
+        for i in 1..n {
+
+            if slice1[i-1] > slice1[i] {
+                slice1.swap(i-1, i);
+                swapped = true;
+            }
+
+        }
+        if !swapped {
+            break
+        }
+    }
+
+    slice1.to_vec()
+
+}
+
 /// Below you can find a set of unit tests.
 #[cfg(test)]
 mod tests {

@@ -1,4 +1,4 @@
-//! Run this file with `cargo test --test 04_state_transition_enum`.
+//! Run this file with `cargo test --test 03_state_transition_enum`.
 
 // The #[derive] attribute enables nicer error messages in tests.
 // It will be explained in later weeks.
@@ -50,6 +50,35 @@ enum Event {
 //
 // Compare this approach with using a struct (which we did on the lesson).
 // Is it easier with an enum or with a struct?
+
+fn pc_transition(computer: ComputerState, event: Event) -> ComputerState {
+    match (computer, event) {
+        (ComputerState::Off, Event::MoveMouse | Event::TurnOff | Event::PassTime(..)) => ComputerState::Off,
+        (ComputerState::Off, Event::TurnOn) => ComputerState::Running { uptime: (0), idle_time: (0) },
+        (ComputerState::Running { uptime, idle_time }, Event::TurnOn) => ComputerState::Running { uptime: (uptime), idle_time: (idle_time) },
+        (ComputerState::Sleeping { uptime, sleep_time }, Event::TurnOn) => ComputerState::Sleeping { uptime: (uptime), sleep_time: (sleep_time) },
+        (ComputerState::Running { .. } | ComputerState::Sleeping { .. }, Event::TurnOff) => ComputerState::Off,
+        (ComputerState::Running { uptime, .. } | ComputerState::Sleeping { uptime, .. }, Event::MoveMouse) => ComputerState::Running { uptime: (uptime), idle_time: (0) },
+        (ComputerState::Running { uptime, idle_time }, Event::PassTime(time)) => {
+            if &idle_time + time > 1000 {
+                if &idle_time + time - 1000 > 500 {
+                    ComputerState::Off
+                } else {
+                    ComputerState::Sleeping { uptime: (uptime + time), sleep_time: (idle_time + time - 1000) }
+                }
+            } else {
+                ComputerState::Running { uptime: (uptime + time), idle_time: (idle_time + time) }
+            }
+        },
+        (ComputerState::Sleeping { uptime, sleep_time }, Event::PassTime(time)) => {
+            if &sleep_time + time > 500 {
+                ComputerState::Off
+            } else {
+                ComputerState::Sleeping { uptime: (uptime + time), sleep_time: (sleep_time + time) }
+            }
+        }
+    }
+}
 
 /// Below you can find a set of unit tests.
 #[cfg(test)]

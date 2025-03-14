@@ -7,6 +7,40 @@
 //
 // Hint: you can use `string.chars()` for iterating the Unicode characters of a string.
 
+fn strip_prefix(needle: &str, prefix: &str) -> String {
+    let prefix: Vec<_> = prefix.chars().collect();
+    let split_pos = {
+        // Position of the split
+        &needle
+        .chars()
+        .position(|c| !prefix.contains(&c))
+    };
+
+    // match split_pos {
+    //     Some(rposition) => {
+    //         let mut needle_string = String::from(needle);
+    //         needle_string.replace_range(..(rposition), "");
+    //         needle_string
+    //     },
+    //     None => String::from("")
+    // }
+
+    match split_pos {
+        Some(position) => {
+            let mut needle_string = String::from(needle);
+            let mut _garbage;
+            for _ in 0..*position {
+                _garbage = needle_string.remove(0);
+            }
+            needle_string
+        },
+        None => String::from("")
+    }
+
+}
+
+
+
 /// Below you can find a set of unit tests.
 #[cfg(test)]
 mod tests {
@@ -39,7 +73,7 @@ mod tests {
         let result = strip_prefix(needle, &prefix);
         // TODO: Uncomment the `drop(prefix)` line.
         // Does the test still work? If not, fix `strip_prefix`!
-        // drop(prefix);
+        drop(prefix);
         assert_eq!(result, "oobar");
     }
 }

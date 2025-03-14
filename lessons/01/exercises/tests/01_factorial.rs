@@ -2,6 +2,14 @@
 
 // TODO: Implement a simple factorial function.
 
+fn factorial(num: u16) -> u16{
+    let mut sum:u16 = 1;
+    for i in 1..=num{
+        sum *= i;
+    }
+    return sum;
+}
+
 /// Below you can find a set of unit tests.
 #[cfg(test)]
 mod tests {

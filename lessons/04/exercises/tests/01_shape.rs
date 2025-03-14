@@ -5,6 +5,59 @@
 //! the `Shape` trait for both of them.
 
 
+use std::f64::consts::PI;
+
+struct Circle {
+    radius: f64
+}
+
+struct Rectangle {
+    width: f64,
+    length: f64
+}
+
+trait Shape {
+    fn area(&self) -> f64;
+    fn perimeter(&self) -> f64;
+}
+
+impl Rectangle{
+    fn new(width: f64, length: f64) -> Rectangle {
+        Rectangle{
+            width,
+            length
+        }
+    }
+}
+
+impl Circle{
+    fn new(radius: f64) -> Circle {
+        Circle{
+            radius
+        }
+    }
+}
+
+impl Shape for Rectangle {
+    fn area(&self) -> f64 {
+        self.length * self.width
+    }
+
+    fn perimeter(&self) -> f64 {
+        2.0*self.length + 2.0*self.width
+    }
+}
+
+impl Shape for Circle {
+    fn area(&self) -> f64 {
+        PI*(self.radius.powf(2.0))
+    }
+    
+    fn perimeter(&self) -> f64 {
+        2.0*PI*self.radius
+    }
+}
+
 /// Below you can find a set of unit tests.
 #[cfg(test)]
 mod tests {

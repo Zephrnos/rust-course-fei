@@ -9,6 +9,27 @@
 //
 // Hint: you can use `string.chars()` to create an iterator over the Unicode characters of a string.
 
+fn interleave(s1: &str, s2: &str) -> String {
+    let mut s1 = s1.chars();
+    let mut s2 = s2.chars();
+    let mut return_string: String = "".to_owned();
+
+    loop {
+        match (s1.next(), s2.next()) {
+            (Some(a), Some(b)) => {
+                return_string += &a.to_string();
+                return_string += &b.to_string();
+            },
+            (Some(a), None) => {return_string += &a.to_string()},
+            (None, Some(a)) => {return_string += &a.to_string()},
+            (None, None) => {break}
+        }
+    }
+
+    return_string
+
+}
+
 /// Below you can find a set of unit tests.
 #[cfg(test)]
 mod tests {
@@ -52,3 +73,24 @@ mod tests {
         );
     }
 }
+
+// fn test_mem() {
+//     let elem1: String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".to_owned();
+//     println!("{}", &elem1);
+//     let elem1 = "abcdefghijklmnopqrstuvwxyz";
+//     println!("{}", &elem1);
+//     let elem2: String = "0123456789".to_owned();
+//     println!("{}", &elem2);
+// }
+
+// #[cfg(test)]
+
+// mod tests {
+//     use crate::test_mem;
+
+//     #[test]
+//     fn interleave_empty() {
+//         test_mem();
+//     }
+
+// }

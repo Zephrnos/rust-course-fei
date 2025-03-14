@@ -5,6 +5,48 @@
 // Implement `new`, `add`, `length` and `normalize` methods, so that tests pass.
 // If you `normalize` a vector that has length 0, it should return a zero-length vector.
 
+struct Vec3 {
+    x: f64,
+    y: f64,
+    z: f64
+}
+
+impl Vec3 {
+    pub fn new(x: f64, y: f64, z: f64) -> Self {
+        Self {
+            x,
+            y,
+            z,
+        }
+    }
+}
+
+impl Vec3 {
+    pub fn add(&self, vector: Vec3) -> Vec3 {
+        let new_vector = Vec3::new(self.x + vector.x, self.y + vector.y, self.z + vector.z);
+        return new_vector;
+    }
+}
+
+impl Vec3 {
+    pub fn length(&self) -> f64 {
+        let mut vec_length:f64 = self.x.powf(2.0) + self.y.powf(2.0) + self.z.powf(2.0);
+        vec_length = vec_length.sqrt();
+        return vec_length;
+    }
+}
+
+impl Vec3 {
+    pub fn normalize(self) -> Vec3 {
+        let magnitude = self.length();
+        let mut normalized_vector = Vec3::new(0.0,0.0,0.0);
+        if magnitude != 0.0 {
+            normalized_vector = Vec3::new(self.x/magnitude, self.y/magnitude, self.z/magnitude);
+        }
+        return normalized_vector;
+    }
+}
+
 /// Below you can find a set of unit tests.
 #[cfg(test)]
 mod tests {

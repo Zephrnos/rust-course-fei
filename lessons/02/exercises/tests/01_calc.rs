@@ -10,6 +10,25 @@
 // operation should be performed on it.
 // Hint: max(..) and min(..) methods of `i32` might come in handy.
 
+use std::cmp;
+enum Op {
+    Add(i32),
+    Sub(i32),
+    Clamp{high: i32, low: i32},
+}
+
+
+fn perform_calculation(num: i32, operation: Op) -> i32{
+    let calculated: i32;
+    match operation{
+        Op::Add(x) => {calculated = num + x},
+        Op::Sub(x) => {calculated = num - x},
+        Op::Clamp{high,low } => {calculated = cmp::min(cmp::max(num, low), high)},
+    }
+    calculated
+}
+
+
 /// Below you can find a set of unit tests.
 #[cfg(test)]
 mod tests {

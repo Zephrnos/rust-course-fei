@@ -8,6 +8,13 @@
 /// Return 3 in any other situation.
 /// The match expression should have three arms.
 fn exercise_1(v: u8) -> u8 {
+    let num: u8;
+    match v {
+        0 | 2 | 4 => num = 2,
+        1 | 3 | 5 => num = 1,
+        _ => num = 3,
+    }
+    num
 }
 
 /// Return 1 if `v` is between 0 (inclusive) and 100 (exclusive).
@@ -15,18 +22,38 @@ fn exercise_1(v: u8) -> u8 {
 /// Return 3 in any other situation.
 /// The match expression should have three arms.
 fn exercise_2(v: u8) -> u8 {
+    let num: u8;
+    match v {
+        0..100 => num = 1,
+        100..200 => num = 2,
+        _ => num = 3,
+    }
+    num
 }
+
 
 /// Return 1 if `v` is in the first half of the English alphabet (`a-n` or `A-N`) (uppercase *or* lowercase).
 /// Return 2 if `v` is in the second half of the English alphabet (`o-z` or `O-Z`) (uppercase *or* lowercase).
 /// Return 3 if `v` is not in the English alphabet.
 /// The match expression should have three arms.
 fn exercise_3(v: char) -> u8 {
+    let mut v = v.to_ascii_lowercase() as u8;
+    match v {
+        97..=110 => v = 1,
+        111..=122 => v = 2,
+        _ => v = 3,
+    }
+    v
 }
 
 /// Check if the character in `v` is a digit (0-9).
 /// The match expression should have two arms.
 fn exercise_4(v: char) -> bool {
+    let v = v as u8;
+    match v {
+        48..=57 => true,
+        _ => false,
+    }
 }
 
 /// Check if `v` is a digit. If it is, return a u32 containing the numerical value of that digit
@@ -40,6 +67,11 @@ fn exercise_4(v: char) -> bool {
 ///
 /// If `v` is not a digit, return `None`.
 fn exercise_5(v: char) -> Option<u32> {
+    let v = v as u8;
+    match v {
+        48..=57 => Some((v-48) as u32),
+        _ => None,
+    }
 }
 
 /// Below you can find a set of unit tests.
