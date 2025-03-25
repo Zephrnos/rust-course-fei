@@ -13,6 +13,11 @@
 ///
 /// Example 1: `[0,1,42,3,42,5,6,42,8,9]` -> Some(7)
 /// Example 2: `[0,1,42,3,42,5,6,7,8,9]` -> None
+
+fn keep_even<'a>(vec: &'a [i32]) -> impl Iterator<Item = &'a i32> + 'a {
+    todo!()
+}
+
 fn find_third_42(vec: &[i64]) -> Option<usize> {
     todo!()
 }

@@ -4,6 +4,39 @@
 //! Fibonacci numbers (starting from 0).
 //! `Fibonacci` should implement the `Default` trait.
 
+struct Fibonacci {
+    current: u64,
+    next: u64,
+}
+
+impl Default for Fibonacci {
+    fn default() -> Self {
+        Fibonacci {
+            current: 0,  // Start with 0 as the first number
+            next: 1,     // And 1 as the second number
+        }
+    }
+}
+
+impl Iterator for Fibonacci {
+    type Item = u64;
+    
+    fn next(&mut self) -> Option<Self::Item> {
+        // Save the current value to return
+        let current = self.current;
+        
+        // Calculate the next Fibonacci number
+        let next_fibonacci = self.current + self.next;
+        
+        // Update state for the next call
+        self.current = self.next;
+        self.next = next_fibonacci;
+        
+        // Return the current Fibonacci number
+        Some(current)
+    }
+}
+
 /// Below you can find a set of unit tests.
 #[cfg(test)]
 mod tests {
