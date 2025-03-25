@@ -14,12 +14,28 @@
 /// Example 1: `[0,1,42,3,42,5,6,42,8,9]` -> Some(7)
 /// Example 2: `[0,1,42,3,42,5,6,7,8,9]` -> None
 
-fn keep_even<'a>(vec: &'a [i32]) -> impl Iterator<Item = &'a i32> + 'a {
-    todo!()
-}
+// fn keep_even<'a>(vec: &'a [i32]) -> impl Iterator<Item = &'a i32> + 'a {
+//     todo!()
+// }
 
-fn find_third_42(vec: &[i64]) -> Option<usize> {
-    todo!()
+// fn find_third_42(vec: &[i64]) -> Option<usize> {
+//     todo!()
+// }
+
+fn keep_even<I>(iter: I) -> impl Iterator<Item = I::Item>
+where
+    I: IntoIterator,
+{
+    // Convert the input into an iterator
+    let iterator = iter.into_iter();
+    
+    // Use the enumerate adapter to get indices with items
+    // Then filter to keep only even indices
+    // Finally map to extract just the items
+    iterator
+        .enumerate()
+        .filter(|(index, _)| index % 2 == 0)
+        .map(|(_, item)| item)
 }
 
 /// Below you can find a set of unit tests.
